@@ -13,6 +13,8 @@ PharosEstate is a decentralized platform built on the Pharos Network that enable
 - Property Analytics: Real-time data and analytics on property performance and investment returns
 - Portfolio Management: Tools to track and manage your diversified real estate portfolio
 
+## PharosEstate Demo Video 
+
 
 ## Contract Addresses (Pharos Devnet)
 
