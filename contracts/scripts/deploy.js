@@ -1,70 +1,56 @@
-// We import the hardhat environment
-const hre = require("hardhat");
+// deploy.js - Script to deploy the PharosEstate platform smart contracts
+const { ethers, upgrades } = require("hardhat");
 
 async function main() {
-  console.log("Deploying RSK TrustID contracts...");
+  console.log("Deploying PharosEstate platform contracts...");
+  console.log(`Network: ${network.name}, ChainId: ${network.config.chainId}`);
 
-  // Get deployer account
-  const [deployer] = await hre.ethers.getSigners();
-  console.log(`Deploying contracts with the account: ${deployer.address}`);
-
-  // Deploy TrustID
-  const TrustID = await hre.ethers.getContractFactory("TrustID");
-  const trustId = await TrustID.deploy();
-  await trustId.waitForDeployment();
-  const trustIdAddress = await trustId.getAddress();
-  console.log(`TrustID deployed to: ${trustIdAddress}`);
-
-  // Deploy TrustIDFactory
-  const TrustIDFactory = await hre.ethers.getContractFactory("TrustIDFactory");
-  const trustIdFactory = await TrustIDFactory.deploy(trustIdAddress);
-  await trustIdFactory.waitForDeployment();
-  console.log(`TrustIDFactory deployed to: ${await trustIdFactory.getAddress()}`);
-
-  // Deploy CredentialRegistry
-  const CredentialRegistry = await hre.ethers.getContractFactory("CredentialRegistry");
-  const credentialRegistry = await CredentialRegistry.deploy(trustIdAddress);
-  await credentialRegistry.waitForDeployment();
-  console.log(`CredentialRegistry deployed to: ${await credentialRegistry.getAddress()}`);
-
-  // Deploy AIReputationOracle
-  const AIReputationOracle = await hre.ethers.getContractFactory("AIReputationOracle");
-  const aiReputationOracle = await AIReputationOracle.deploy(trustIdAddress);
-  await aiReputationOracle.waitForDeployment();
-  const oracleAddress = await aiReputationOracle.getAddress();
-  console.log(`AIReputationOracle deployed to: ${oracleAddress}`);
-
-  // Grant roles
-  console.log("Setting up roles...");
+  // Get the contract factories
+  const PropertyToken = await ethers.getContractFactory("PropertyToken");
+  const PropertyMarketplace = await ethers.getContractFactory("PropertyMarketplace");
   
-  // Grant oracle role to AIReputationOracle
-  const ORACLE_ROLE = await trustId.ORACLE_ROLE();
-  await trustId.grantRole(ORACLE_ROLE, oracleAddress);
-  console.log(`Granted ORACLE_ROLE to ${oracleAddress}`);
-
-  // Grant issuer role to deployer (for testing)
-  const ISSUER_ROLE = await credentialRegistry.ISSUER_ROLE();
-  await credentialRegistry.grantRole(ISSUER_ROLE, deployer.address);
-  console.log(`Granted ISSUER_ROLE to ${deployer.address}`);
-
+  // Deploy the PropertyToken implementation as upgradeable
+  console.log("Deploying PropertyToken implementation...");
+  const propertyTokenImpl = await upgrades.deployProxy(PropertyToken, [
+    "Pharos Commercial Property", // name
+    "PCP", // symbol
+    "123 Main Street, New York, NY", // propertyAddress
+    ethers.utils.parseEther("1000000"), // propertyValue (1 million)
+    "ipfs://QmURkM5z9TQCy4tR9NB9mGSQ8198ZBP352rwQodyU8zLuu", // propertyDocumentURI (example IPFS hash)
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8" // complianceManager (example address)
+  ], { initializer: 'initialize' });
+  
+  await propertyTokenImpl.deployed();
+  console.log("PropertyToken deployed to:", propertyTokenImpl.address);
+  
+  // Deploy the PropertyMarketplace as upgradeable
+  console.log("Deploying PropertyMarketplace...");
+  const propertyMarketplace = await upgrades.deployProxy(PropertyMarketplace, [
+    50, // listingFee (0.5%)
+    100, // transactionFee (1%)
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" // feeRecipient (example address)
+  ], { initializer: 'initialize' });
+  
+  await propertyMarketplace.deployed();
+  console.log("PropertyMarketplace deployed to:", propertyMarketplace.address);
+  
+  // Approve the property token in the marketplace
+  console.log("Approving property token in marketplace...");
+  const approveTx = await propertyMarketplace.approvePropertyToken(propertyTokenImpl.address);
+  await approveTx.wait();
+  console.log("Property token approved in marketplace");
+  
+  // Display deployment information
   console.log("Deployment complete!");
-  
-  // Return the contract addresses for verification
-  return {
-    trustId: trustIdAddress,
-    trustIdFactory: await trustIdFactory.getAddress(),
-    credentialRegistry: await credentialRegistry.getAddress(),
-    aiReputationOracle: oracleAddress
-  };
+  console.log(`Network: ${network.name}, ChainId: ${network.config.chainId}`);
+  console.log("PropertyToken:", propertyTokenImpl.address);
+  console.log("PropertyMarketplace:", propertyMarketplace.address);
+  console.log(`Verify contracts on Pharos Explorer: https://pharosscan.xyz/address/${propertyTokenImpl.address}`);
 }
 
 // Execute the deployment
 main()
-  .then((deployedAddresses) => {
-    console.log("Deployment successful!");
-    console.log("Contract addresses:", deployedAddresses);
-    process.exit(0);
-  })
+  .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);
     process.exit(1);
