@@ -4,14 +4,14 @@ PharosEstate is a decentralized platform built on the Pharos Network that enable
 
 ## 🌟 Key Features
 
-- **Fractional Ownership**: Purchase tokens representing partial ownership of premium commercial properties
-- **Dynamic Tokenization**: Property tokens that adapt based on real-time performance metrics
-- **Automated Rental Distribution**: Smart contracts distribute rental income to token holders proportionally
-- **Secondary Market**: Trade property tokens with high liquidity on our built-in marketplace
-- **KYC/AML Compliance**: Regulatory-compliant platform with integrated identity verification
-- **Cross-Border Investments**: Invest in global real estate markets without traditional geographical barriers
-- **Property Analytics**: Real-time data and analytics on property performance and investment returns
-- **Portfolio Management**: Tools to track and manage your diversified real estate portfolio
+- Fractional Ownership: Purchase tokens representing partial ownership of premium commercial properties
+- Dynamic Tokenization: Property tokens that adapt based on real-time performance metrics
+- Automated Rental Distribution: Smart contracts distribute rental income to token holders proportionally
+- Secondary Market: Trade property tokens with high liquidity on our built-in marketplace
+- KYC/AML Compliance: Regulatory-compliant platform with integrated identity verification
+- Cross-Border Investments: Invest in global real estate markets without traditional geographical barriers
+- Property Analytics: Real-time data and analytics on property performance and investment returns
+- Portfolio Management: Tools to track and manage your diversified real estate portfolio
 
 
 ## Contract Addresses (Pharos Devnet)
@@ -26,12 +26,12 @@ PharosEstate is a decentralized platform built on the Pharos Network that enable
 
 RealTokens leverages Pharos Network's high-performance infrastructure:
 
-- **Frontend**: Next.js application with TypeScript and Tailwind CSS
-- **Smart Contracts**: Solidity contracts deployed on Pharos Network
-- **Tokenization**: ERC-3643 compliant tokens for regulatory compliance
-- **Identity & Compliance**: On-chain identity verification and compliance checks
-- **Middleware**: API layer connecting real-world property data to on-chain assets
-- **Oracle Integration**: Real-world data feeds for property values and rental income
+- Frontend: Next.js application with TypeScript and Tailwind CSS
+- Smart Contracts: Solidity contracts deployed on Pharos Network
+- Tokenization: ERC-3643 compliant tokens for regulatory compliance
+- Identity & Compliance: On-chain identity verification and compliance checks
+- Middleware: API layer connecting real-world property data to on-chain assets
+- Oracle Integration: Real-world data feeds for property values and rental income
 
 ## 🚀 Getting Started
 
@@ -45,7 +45,7 @@ RealTokens leverages Pharos Network's high-performance infrastructure:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/realtokens.git
+   git clone https://github.com/kamalbuilds/realtokens.git
    cd realtokens
    ```
 
@@ -93,17 +93,17 @@ npx hardhat test
 
 ## 📊 Business Model
 
-- **Platform Fees**: 1-2% fee on property tokenization
-- **Transaction Fees**: 0.5% fee on secondary market trades
-- **Management Fees**: 0.25% annual fee on assets under management
-- **Premium Services**: Additional fees for advanced analytics and portfolio tools
+- Platform Fees: 1-2% fee on property tokenization
+- Transaction Fees: 0.5% fee on secondary market trades
+- Management Fees: 0.25% annual fee on assets under management
+- Premium Services: Additional fees for advanced analytics and portfolio tools
 
 ## 🔗 How It Leverages Pharos Network
 
-- **High Performance**: Utilizes Pharos's parallel execution for high-volume token trading
-- **Interoperability**: Connects to traditional finance systems via Pharos's data exchange protocol
-- **Scalability**: Leverages Special Processing Networks (SPNs) for specialized real estate data processing
-- **Security**: Implements Pharos's native restaking for enhanced security guarantees
+- High Performance: Utilizes Pharos's parallel execution for high-volume token trading
+- Interoperability: Connects to traditional finance systems via Pharos's data exchange protocol
+- Scalability: Leverages Special Processing Networks (SPNs) for specialized real estate data processing
+- Security: Implements Pharos's native restaking for enhanced security guarantees
 
 ## 📝 License
 
