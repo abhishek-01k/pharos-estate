@@ -1,8 +1,8 @@
 import { createThirdwebClient } from "thirdweb";
+import { PHAROS_RPC_URL, CHAIN_ID } from "../config/constants";
 
-// Replace this with your client ID string
-// refer to https://portal.thirdweb.com/typescript/v5/client on how to get a client ID
-const clientId = process.env.NEXT_PUBLIC_TEMPLATE_CLIENT_ID;
+// Get client ID from environment
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID || "your-thirdweb-client-id";
 
 if (!clientId) {
   throw new Error("No client ID provided");
@@ -11,3 +11,9 @@ if (!clientId) {
 export const client = createThirdwebClient({
   clientId: clientId,
 });
+
+// Pharos chain info for reference (will be used in contract hooks)
+export const pharosChainInfo = {
+  chainId: CHAIN_ID,
+  rpc: PHAROS_RPC_URL,
+};
